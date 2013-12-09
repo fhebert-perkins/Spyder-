@@ -37,7 +37,7 @@ def spyder(SeedUrl, target):
     print timestamp() + "STARTING CRAWL WITH SEED: " + tocrawl[0]
     while tocrawl:
         page=tocrawl.pop(0)
-        if validator(page) and page not in crawled:
+        if validator(page) and page not in crawled and page.find(".pdf") == -1:
             #print  timestamp() + page
             try:
                 pagesource=urllib2.urlopen(page)
