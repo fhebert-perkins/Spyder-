@@ -44,9 +44,12 @@ def spyder(SeedUrl, target):
             except urllib2.HTTPError, e: #handler for HTTP exception and errors
                 #Error message: Time stamp, Error code, page that caused the error 
                 print timestamp() + "ERROR: " + str(e.code) + " " + page
+                crawled.append(page)
             except urllib2.URLError, e: #handler for URL loading errors
                 #Error message: Time Stamp, Error code, page that caused the error
                 print timestamp() + "ERROR: " + str(e.code) + " " + page
+                #fixes problem with loading error pages being reopened
+                crawled.append(page)
             else:
                 #loads the page and reads it
                 s=pagesource.read()
@@ -65,4 +68,4 @@ def spyder(SeedUrl, target):
                 print timestamp() + "Finished Crawl:: " + str(len(tocrawl)) + " left to crawl " 
     return crawled
 
-spyder('http://google.com','http://facebook.com')
+spyder("""put where you want to sart crawling""","""what you URL you want to look for""")
