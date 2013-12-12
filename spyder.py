@@ -56,9 +56,10 @@ def spyder(SeedUrl, target):
                 #fixes problem with loading error pages being reopened
                 crawled.append(page)
             else:
-                urlDomain0 = page.split('/')
-                urlDomain1 = urlDomain0[2]
-
+                Extension = "/"
+                domain = ''
+                urldomain0 = page.split('/')
+                domain = urldomain0.pop(2)
                 #loads the page and reads it
                 s=pagesource.read()
                 soup=BeautifulSoup.BeautifulSoup(s)
@@ -69,15 +70,13 @@ def spyder(SeedUrl, target):
                     #content = soup.findall('')
                 #takes every link and takes the URL to scrape
                 for index, item in enumerate(links):
-                    if links 
                     links[index] = item['href']
-
                 #checks if page is crawled and adds links if not in crawled... This is somewhat depreciated
                 union(tocrawl,links)
                 crawled.append(page)
                 seqNum = seqNum + 1
                 #debug message when page is finished being crawled
-                print timestamp() + "Finished Crawl:: " + str(len(tocrawl)) + " left to crawl " + " Crawled " + str(seqNum) + " pages " + urlDomain1
+                print timestamp() + "Finished Crawl:: " + str(len(tocrawl)) + " left to crawl " + " Crawled " + str(seqNum) + " pages " + domain
                 #output for seq number
     endTime = time.localtime()
 
