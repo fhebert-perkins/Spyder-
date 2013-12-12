@@ -48,11 +48,11 @@ def spyder(SeedUrl, target):
                 pagesource=urllib2.urlopen(page)
             except urllib2.HTTPError, e: #handler for HTTP exception and errors
                 #Error message: Time stamp, Error code, page that caused the error 
-                print timestamp() + "ERROR: " + str(e.code) + " " + page
+                print timestamp() + "ERROR: " + str(e.code)
                 crawled.append(page)
             except urllib2.URLError, e: #handler for URL loading errors
                 #Error message: Time Stamp, Error code, page that caused the error
-                print timestamp() + "ERROR: " + str(e) + " " + page
+                print timestamp() + "ERROR: " + str(e)
                 #fixes problem with loading error pages being reopened
                 crawled.append(page)
             else:
@@ -61,7 +61,7 @@ def spyder(SeedUrl, target):
                 urldomain0 = page.split('/')
                 domain = urldomain0.pop(2)
                 #loads the page and reads it
-                s=pagesource.read()
+                s = pagesource.read()
                 soup=BeautifulSoup.BeautifulSoup(s)
                 #finds all links
                 links=soup.findAll('a',href=True)
