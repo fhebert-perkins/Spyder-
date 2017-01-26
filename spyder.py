@@ -1,6 +1,5 @@
 #HTML Parser
-import BeautifulSoup
-#HTTP Protocol
+from bs4 import BeautifulSoup#HTTP Protocol
 import urllib2
 #URL Checker
 from lepl.apps.rfc3696 import HttpUrl
@@ -22,12 +21,9 @@ def validator(url):
     #returns boolean for valid URL
     return validator(url)
 #p is the database to merge to, q is the source database
-def union(p,q):
+def union(p,source):
     #merge links with to crawl
-    for e in q:
-        if e not in p:
-            #if link not in crawled append link too toCrawl
-            p.append(e)
+    [p.append(e) if e not in p else 0 for e in source]
 
 def spyder(SeedUrl, target):
     startTime = time.localtime()
@@ -37,7 +33,7 @@ def spyder(SeedUrl, target):
     #DB of links that have been crawled
     crawled=[]
     #status message at start of crawl seed url is the first
-    print timestamp() + "STARTING CRAWL WITH SEED: " + tocrawl[0]
+    print(timestamp() + "STARTING CRAWL WITH SEED: " + tocrawl[0])
     while tocrawl:
         page=tocrawl.pop(0)
         #Ghetto fixes for common errors...
@@ -46,13 +42,13 @@ def spyder(SeedUrl, target):
             #print  timestamp() + page
             try:
                 pagesource=urllib2.urlopen(page)
-            except urllib2.HTTPError, e: #handler for HTTP exception and errors
-                #Error message: Time stamp, Error code, page that caused the error 
-                print timestamp() + "ERROR: " + str(e.code)
+            except urllib2.HTTPError as e: #handler for HTTP exception and errors
+                #Error message: Time stamp, Error code, page that caused the error
+                print(timestamp() + "ERROR: " + str(e.code))
                 crawled.append(page)
-            except urllib2.URLError, e: #handler for URL loading errors
+            except urllib2.URLError as e: #handler for URL loading errors
                 #Error message: Time Stamp, Error code, page that caused the error
-                print timestamp() + "ERROR: " + str(e)
+                print(timestamp() + "ERROR: " + str(e))
                 #fixes problem with loading error pages being reopened
                 crawled.append(page)
             else:
@@ -74,9 +70,9 @@ def spyder(SeedUrl, target):
                 #checks if page is crawled and adds links if not in crawled... This is somewhat depreciated
                 union(tocrawl,links)
                 crawled.append(page)
-                seqNum = seqNum + 1
+                seqNum+=1
                 #debug message when page is finished being crawled
-                print timestamp() + "Finished Crawl:: " + str(len(tocrawl)) + " left to crawl " + " Crawled " + str(seqNum) + " pages " + domain
+                print(timestamp() + "Finished Crawl:: " + str(len(tocrawl)) + " left to crawl " + " Crawled " + str(seqNum) + " pages " + domain)
                 #output for seq number
     endTime = time.localtime()
 

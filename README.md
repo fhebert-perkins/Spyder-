@@ -5,10 +5,6 @@ A bare bones web crawler written in python
 
 =======
 Dependencies:
-
-Python 2.7
-
-Beautiful Soup
-
-lepl
-
+- Python 3
+- Beautiful Soup
+- lepl
